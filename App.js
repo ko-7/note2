@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Button } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -13,31 +13,23 @@ import AddFile from './src/screens/AddFile'
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-function LogoTitle() {
-  return (
-    <Icon name='home' />
-  );
-}
-
-function HomeTab(navigation) {
-  const [homeStatus, setHomeStatus] = useState('Home')
+function HomeTab() {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="DirView"
         component={DirView} 
-        initialParams={{homeStatus: homeStatus, setHomeStatus: setHomeStatus}}
-        options={{
-          // headerTitle: homeStatus
-          headerTitle: props => <LogoTitle {...props} />,
+        initialParams={{homeStatus: 'Home'}}
+        options={({route}) => ({
+          headerTitle: route.params.homeStatus,
           headerRight: () => (
             <Button
               onPress={() => alert('This is a button!')}
               title='top'
-              color="#00cc00"
+              color="#5f0"
             />
           )
-        }}
+        })}
       />
       <Stack.Screen name="FileView" component={FileView} options={{headerTitle: 'ファイル',}} />
     </Stack.Navigator>
@@ -59,7 +51,6 @@ function SettingTab() {
 }
 
 export default function App() {
-
   return (
     <NavigationContainer>
       <Tab.Navigator>
