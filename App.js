@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button,TouchableOpacity } from 'react-native';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -20,14 +20,20 @@ function HomeTab() {
         name="DirView"
         component={DirView} 
         initialParams={{homeStatus: 'Home'}}
-        options={({route}) => ({
+        options={({route,navigation}) => ({
           headerTitle: route.params.homeStatus,
           headerRight: () => (
+            // <TouchableOpacity
+            //   onPress={() => navigation.popToTop()}
+            // >
+            //   <Icon name='home' style={{fontSize:'26'}} />
+            // </TouchableOpacity>
             <Button
-              onPress={() => alert('This is a button!')}
+              onPress={() => navigation.popToTop()}
               title='top'
               color="#5f0"
-            />
+            >
+            </Button>
           )
         })}
       />

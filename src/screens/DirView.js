@@ -2,7 +2,6 @@ import React, { useState,useLayoutEffect } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet, Text, Button,TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
 export default function DirView ({route, navigation}) {
   const [allKeys, setAllKeys] = useState([])           //全てのkeyを管理する変数
   const [allData, setAllData] = useState([
@@ -19,7 +18,7 @@ export default function DirView ({route, navigation}) {
   const [D_or_F, setD_or_F] = useState('')                //ディレクトリ(D)かファイル(F)か
   const [belong, setBelong] = useState('')                //どのディレクトリに内にあるか。所属する親ディレクトリのkeyを入れる
   const [displayOrder, setDisplayOrder] = useState()      //ディレクトリ開いた時の表示順序
-  
+
   return(
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -40,6 +39,8 @@ export default function DirView ({route, navigation}) {
         }}
       />
       <Button title='ファイルへ' onPress={() => navigation.navigate('FileView')} />
+      <Text style={styles.text}>{route.params.homeStatus}</Text>
+
     </SafeAreaView>
   );
 }
