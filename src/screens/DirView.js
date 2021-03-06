@@ -19,28 +19,50 @@ export default function DirView ({route, navigation}) {
   const [belong, setBelong] = useState('')                //どのディレクトリに内にあるか。所属する親ディレクトリのkeyを入れる
   const [displayOrder, setDisplayOrder] = useState()      //ディレクトリ開いた時の表示順序
 
+  function Display(props){
+    const nameOrContent = props.nameOrContent
+    const D_or_F = props.D_or_F
+    const belong = props.belong
+    if(belong === route.params.homeStatus) {
+      if(D_or_F === 'D'){
+        console.log(D_or_F)
+        return(
+          <TouchableOpacity
+            style={styles.listItem} 
+            onPress={() => navigation.push('DirView',{homeStatus:nameOrContent})}
+          >
+            <Icon name='folder' style={styles.icon} size={28} />
+            <Text style={styles.text}>{nameOrContent}</Text>
+          </TouchableOpacity>
+        );
+      }else{
+        return(
+          <TouchableOpacity
+            style={styles.listItem} 
+            onPress={() => navigation.push('FileView',{homeStatus:''})}
+          >
+            <Icon name='file' style={styles.icon} size={28} />
+            <Text style={styles.text}>{nameOrContent}</Text>
+          </TouchableOpacity>
+        )
+      }
+    }else{
+      return null
+    }
+  }
+
   return(
     <SafeAreaView style={styles.container}>
       <FlatList
         data={allData}
         renderItem={({ item }) => {
-          let D_or_F
-          item[2] === 'D' ? D_or_F = 'folder' : D_or_F = 'file';
-
           return(
-            <TouchableOpacity
-              style={styles.listItem} 
-              onPress={() => navigation.push('DirView',{homeStatus:item[1]})}
-            >
-              <Icon name={D_or_F} style={styles.icon} size={28} />
-              <Text style={styles.text}>{item[1]}</Text>
-            </TouchableOpacity>
-          );
+            <Display nameOrContent={item[1]} D_or_F={item[2]} belong={item[3]} />
+          )
         }}
       />
       <Button title='ファイルへ' onPress={() => navigation.navigate('FileView')} />
       <Text style={styles.text}>{route.params.homeStatus}</Text>
-
     </SafeAreaView>
   );
 }
